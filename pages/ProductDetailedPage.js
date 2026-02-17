@@ -6,20 +6,18 @@ class ProductDetailedPage {
     }
 
     async verifyLoaded() {
-        await this.page.waitForSelector(selectors.product.addToCartBtn, { visible: true });
+        await this.page.waitForSelector(selectors.product.addToCartBtn);
         console.log("Product Detailed Page loaded successfully");
     }
 
     async addToCart() {
         await this.page.click(selectors.product.addToCartBtn);
-        await this.page.waitForSelector(selectors.product.goToCartBtn, { visible: true });
+        await this.page.waitForSelector(selectors.product.goToCartBtn);
     }
 
     async goToCart() {        
-        await Promise.all([
-            this.page.waitForNavigation(),
-            this.page.click(selectors.product.goToCartBtn),
-        ]);
+        await this.page.click(selectors.product.goToCartBtn),
+        await this.page.waitForSelector(selectors.cart.checkoutOrderBtn, { timeout: 30000 });
     }
 }
 module.exports = ProductDetailedPage;

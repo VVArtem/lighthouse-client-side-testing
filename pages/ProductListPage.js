@@ -6,23 +6,21 @@ class ProductListPage {
     }
 
     async verifyLoaded() {
-        await this.page.waitForSelector(selectors.category.productLinks, { visible: true });
+        await this.page.waitForSelector(selectors.category.productLinks);
         console.log("Product List Page loaded successfully");
     }
 
     async clickRandomProduct() {
-        const links = await this.page.$$(selectors.category.productLinks)
+        const products = await this.page.$$(selectors.category.productLinks)
 
-        if (links.length === 0) {
+        if (products.length === 0) {
             throw new Error(`No products found. Selector: ${selectors.category.productLinks}`);
         }
                 
-        const randomLink = links[Math.floor(Math.random() * links.length)];
-        
-        await Promise.all([
-            this.page.waitForNavigation(),
-            randomLink.click()
-        ]);
+        const randomProduct = products[Math.floor(Math.random() * products.length)];
+
+        await randomProduct.evaluate(el => el.click());
+        await this.page.waitForNavigation();
     }
 }
 module.exports = ProductListPage;

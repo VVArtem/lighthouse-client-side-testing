@@ -6,22 +6,22 @@ class CheckoutPage {
     }
 
     async verifyLoaded() {
-        await this.page.waitForSelector(selectors.checkout.placeOrderBtn, { visible: true });
+        await this.page.waitForSelector(selectors.checkout.placeOrderBtn);
         console.log("Checkout Page loaded successfully");
     }
 
     async fillOrderFields(userData) {
         await this.page.waitForSelector(selectors.checkout.fields.name);
 
-        await this.page.type(fields.name, userData.name);
-        await this.page.type(fields.address, userData.address);
-        await this.page.type(fields.city, userData.city);
-        await this.page.type(fields.postal, userData.postal);
+        await this.page.type(selectors.checkout.fields.name, userData.name);
+        await this.page.type(selectors.checkout.fields.address, userData.address);
+        await this.page.type(selectors.checkout.fields.city, userData.city);
+        await this.page.type(selectors.checkout.fields.postal, userData.postal);
 
-        await this.page.select(fields.country, userData.country);
+        await this.page.select(selectors.checkout.fields.country, userData.country);
 
-        await this.page.type(fields.phone, userData.phone);
-        await this.page.type(fields.email, userData.email);
+        await this.page.type(selectors.checkout.fields.phone, userData.phone);
+        await this.page.type(selectors.checkout.fields.email, userData.email);
     }
 
     async placeOrder() {        

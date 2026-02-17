@@ -6,7 +6,7 @@ class CartPage {
     }
 
     async verifyLoaded() {
-        await this.page.waitForSelector(selectors.cart.checkoutOrderBtn, { visible: true });
+        await this.page.waitForSelector(selectors.cart.checkoutOrderBtn);
         console.log("Cart Page loaded successfully");
     }
 

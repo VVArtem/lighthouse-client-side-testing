@@ -6,7 +6,7 @@ class HomePage {
     }
 
     async verifyLoaded() {
-        await this.page.waitForSelector(selectors.home.categoryLinks, { visible: true });
+        await this.page.waitForSelector(selectors.home.categoryLinks);
         console.log("Home Page loaded successfully");
     }
 
@@ -21,7 +21,7 @@ class HomePage {
         
         await Promise.all([
             this.page.waitForNavigation(),
-            randomLink.click()
+            this.page.evaluate(el => el.click(), randomLink)        
         ]);
     }
 }

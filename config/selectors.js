@@ -1,6 +1,6 @@
 module.exports = {
     home: {
-        categoryLinks: "div.al_archive:not(.priced) a:not(.pseudo-a)",
+        categoryLinks: "div.al_archive:not(.priced) .pseudo-a",
     },
     category: {
         productLinks: ".al_archive.priced a",
