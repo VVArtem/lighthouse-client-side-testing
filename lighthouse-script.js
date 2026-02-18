@@ -1,6 +1,6 @@
-const fs = require('fs') // filesystem for reports
+const fs = require('fs')
 const path = require('path');
-const puppeteer = require('puppeteer') // lib -> manage user behavior in Chrome
+const puppeteer = require('puppeteer')
 
 const HomePage = require('./pages/HomePage');
 const ProductListPage = require('./pages/ProductListPage');
@@ -39,6 +39,7 @@ async function captureReport() {
     const checkoutPage = new CheckoutPage(page);
     const thankYouPage = new ThankYouPage(page);
 
+    const baseUrl = 'http://localhost/';
 
     const flow = await startFlow(page, {
         name: 'Essentials frontend performance',
@@ -57,7 +58,7 @@ async function captureReport() {
 
     try {
         // 1: Open the home page
-        await flow.navigate('http://localhost/', { stepName: 'Home Page Load' });
+        await flow.navigate(baseUrl, { stepName: 'Home Page Load' });
         await homePage.verifyLoaded();
 
         // 2: Go to a random category page
