@@ -1,6 +1,6 @@
-const fs = require('fs') // filesystem for reports
+const fs = require('fs')
 const path = require('path');
-const puppeteer = require('puppeteer') // lib -> manage user behavior in Chrome
+const puppeteer = require('puppeteer')
 
 const HomePage = require('./pages/HomePage');
 const ProductListPage = require('./pages/ProductListPage');
@@ -17,19 +17,9 @@ async function captureReport() {
     const users = CsvFeeder.loadUsers(path.resolve('data/users.csv'));
     const randomUser = users[Math.floor(Math.random() * users.length)];
 
-    const browser = await puppeteer.launch({
-        headless: "new", 
-        args: [
-            '--no-sandbox', 
-            '--disable-gpu', 
-            '--window-size=1920,1080',
-            '--ignore-certificate-errors'
-        ] 
-    });
+    const browser = await puppeteer.launch();
 
     const page = await browser.newPage()
-    await page.setViewport({ "width": 1920, "height": 1080 })
-
 
     const homePage = new HomePage(page);
     const categoryPage = new ProductListPage(page);
@@ -37,6 +27,8 @@ async function captureReport() {
     const cartPage = new CartPage(page);
     const checkoutPage = new CheckoutPage(page);
     const thankYouPage = new ThankYouPage(page);
+
+    const baseUrl = 'http://localhost/';
 
 
     const flow = await startFlow(page, {
@@ -53,7 +45,7 @@ async function captureReport() {
 
 
     try {
-        await flow.navigate('http://localhost/', { stepName: 'Home Page Load' });
+        await flow.navigate(baseUrl, { stepName: 'Home Page Load' });
         await homePage.verifyLoaded();
 
         await flow.startNavigation({ stepName: 'Navigate to Category' });

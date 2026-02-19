@@ -18,19 +18,9 @@ async function captureReport() {
     const users = CsvFeeder.loadUsers(path.resolve('data/users.csv'));
     const randomUser = users[Math.floor(Math.random() * users.length)];
 
-    const browser = await puppeteer.launch({
-        headless: "new", 
-        args: [
-            '--no-sandbox', 
-            '--disable-gpu', 
-            '--window-size=1920,1080',
-            '--ignore-certificate-errors'
-        ] 
-    });
+    const browser = await puppeteer.launch();
 
     const page = await browser.newPage()
-    await page.setViewport({ "width": 1920, "height": 1080 })
-
 
     const homePage = new HomePage(page);
     const categoryPage = new ProductListPage(page);
@@ -118,7 +108,6 @@ async function captureReport() {
     const reportPathJson = __dirname + '/user-flow.report.json'; //folder for json report
 
     const report = await flow.generateReport();
-    //(Deprecated) const reportJson = JSON.stringify(flow.getFlowResult()).replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029'); //taken from GitHub
     const flowResult = await flow.createFlowResult();
     const reportJson = JSON.stringify(flowResult).replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
 
